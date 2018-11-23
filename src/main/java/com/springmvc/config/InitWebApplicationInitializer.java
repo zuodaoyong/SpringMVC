@@ -10,6 +10,7 @@ import javax.servlet.ServletRegistration;
 import org.springframework.cglib.transform.impl.AddDelegateTransformer;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import com.springmvc.test.TestController;
@@ -18,21 +19,15 @@ public class InitWebApplicationInitializer implements WebApplicationInitializer 
 
 	@Override
 	public void onStartup(ServletContext sc) throws ServletException {
-		List<WebApplicationInitializer> initializers = new LinkedList<>();
+		XmlWebApplicationContext appContext = new XmlWebApplicationContext();
+        appContext.setConfigLocation("classpath:spring/spring-mvc.xml");
 		//AnnotationConfigWebApplicationContext ac = new AnnotationConfigWebApplicationContext();
-		InitWebAppInitializer webAppInitializer=new InitWebAppInitializer();
-		initializers.add(webAppInitializer);
 		//ac.register(TestController.class);
         //ac.refresh();
-        // Create and register the DispatcherServlet
-        InitWebAppInitializer servlet = new InitWebAppInitializer();
-        //ServletRegistration.Dynamic registration = sc.addServlet("springmvc", servlet);
-        //registration.setLoadOnStartup(1);
-//        for (WebApplicationInitializer initializer : initializers) {
-//    	    initializer.onStartup(sc);
-//    	    sc.addServlet("app", servlet);
-//    	}
-
+        //Create and register the DispatcherServlet
+        DispatcherServlet servlet=new DispatcherServlet(appContext);
+        ServletRegistration.Dynamic registration = sc.addServlet("springmvc", servlet);
+        registration.setLoadOnStartup(1);
         //registration.addMapping("/test/*");
 	}
 

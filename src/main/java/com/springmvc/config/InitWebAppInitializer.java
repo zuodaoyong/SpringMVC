@@ -1,6 +1,10 @@
 package com.springmvc.config;
 
+import javax.servlet.Filter;
+
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import com.springmvc.filters.UrlFilter;
 
 public class InitWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -19,4 +23,14 @@ public class InitWebAppInitializer extends AbstractAnnotationConfigDispatcherSer
 		return new String[]{"/test123/*"};
 	}
 
+	@Override
+	protected Filter[] getServletFilters() {
+		return new Filter[]{new UrlFilter()};
+	}
+	
+	@Override
+	protected boolean isAsyncSupported() {
+		return super.isAsyncSupported();
+	}
+	
 }
