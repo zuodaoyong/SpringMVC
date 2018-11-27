@@ -12,11 +12,11 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 import com.springmvc.filters.UrlFilter;
 
-public class InitWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class InitWebAppInitializer2 extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class<?>[]{RootConfig.class};
+		return null;
 	}
 
 	@Override
@@ -26,12 +26,12 @@ public class InitWebAppInitializer extends AbstractAnnotationConfigDispatcherSer
 
 	@Override
 	protected String[] getServletMappings() {
-		return new String[]{"/test123/*"};
+		return new String[]{"/test1235/*"};
 	}
 
 	@Override
 	protected String getServletName() {
-		return "asd";
+		return "asd123";
 	}
 	
 	@Override
@@ -49,7 +49,7 @@ public class InitWebAppInitializer extends AbstractAnnotationConfigDispatcherSer
 					"Check if there is another servlet registered under the same name.");
 		}
 
-		registration.setLoadOnStartup(1);
+		registration.setLoadOnStartup(2);
 		registration.addMapping(getServletMappings());
 		registration.setAsyncSupported(isAsyncSupported());
 

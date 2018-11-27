@@ -11,14 +11,25 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.mvc.LastModified;
 
 import com.springmvc.async.AppAsyncListener;
 import com.springmvc.async.AsyncRequestProcessor;
 
 @RequestMapping("/test")
 @Controller
-public class TestController {
+public class TestController implements LastModified{
 
+	private long lastModified;
+	
+	@RequestMapping("/test")
+	@ResponseBody
+	public String test(){
+		return "123";
+	}
+	
+	
 	@RequestMapping("/sync")
 	@ResponseBody
 	public void sync(HttpServletRequest request,HttpServletResponse response){
@@ -87,6 +98,18 @@ public class TestController {
             Thread.sleep(secs);  
         } catch (InterruptedException e) {  
             e.printStackTrace();  
-        }  
-    }  
+        }
+    }
+
+	
+	@Override
+	public long getLastModified(HttpServletRequest request) {
+		 //时间戳逻辑，返回最后修改时间，例如
+        if (lastModified == 0L) {
+            lastModified = System.currentTimeMillis();
+        }
+        return lastModified;
+	}  
+	
+	
 }
